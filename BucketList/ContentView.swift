@@ -60,33 +60,33 @@ struct ContentView: View {
             }
             Text("Hello World")
                 .onTapGesture {
-                    let str = "Test Message"
-                    let url = getDocuments().appendingPathComponent("message.txt")
-                    do {
-                        try str.write(to: url, atomically: true, encoding: .utf8)
-                        let input = try String(contentsOf: url)
-                        print(input)
-                    } catch {
-                        print(error.localizedDescription)
-                    }
-//                    FileManager.default.storeData(data: "Test Message")
+//                    let str = "Test Message"
+//                    let url = getDocuments().appendingPathComponent("message.txt")
+//                    do {
+//                        try str.write(to: url, atomically: true, encoding: .utf8)
+//                        let input = try String(contentsOf: url)
+//                        print(input)
+//                    } catch {
+//                        print(error.localizedDescription)
+//                    }
+                    FileManager.default.storeData(data: "Test Message")
                 }
             Button("Write") {
-                let data = Data("Test Message".utf8)
-                let url = URL.documentsDirectory.appending(path: "message.txt")
-                do {
-                    // atomic means completely at once all data
-                    try data.write(to: url, options: [.atomic, .completeFileProtection])
-                    let input = try String(contentsOf: url)
-                    print(input)
-                } catch {
-                    print(error.localizedDescription)
-                }
-//                FileManager.default.storeData(data: "Test Message")
+//                let data = Data("Test Message".utf8)
+//                let url = URL.documentsDirectory.appending(path: "message.txt")
+//                do {
+//                    // atomic means completely at once all data
+//                    try data.write(to: url, options: [.atomic, .completeFileProtection])
+//                    let input = try String(contentsOf: url)
+//                    print(input)
+//                } catch {
+//                    print(error.localizedDescription)
+//                }
+                FileManager.default.storeData(data: "Test Message")
             }
-//            Button("Read"){
-//                print(FileManager.default.readData())
-//            }
+            Button("Read"){
+                print(FileManager.default.readData())
+            }
         }
         .padding()
     }
