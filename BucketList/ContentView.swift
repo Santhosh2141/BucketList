@@ -7,6 +7,32 @@
 
 import SwiftUI
 
+extension FileManager{
+    func storeData(data: String){
+        let saveData = Data(data.utf8)
+        let url = URL.documentsDirectory.appending(path: "message.txt")
+        
+        do {
+            // atomic means completely at once all data
+            try saveData.write(to: url, options: [.atomic, .completeFileProtection])
+            let input = try String(contentsOf: url)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func readData() -> String {
+        let url = URL.documentsDirectory.appending(path: "message.txt")
+        
+        guard let data = try? Data(contentsOf: url) else {
+            print("Failed to Read Data")
+            return ""
+        }
+        
+        let result = try? String(data: data, encoding: .utf8)
+        return result ?? "No Value Available"
+    }
+}
 struct User: Identifiable, Comparable{
     let id = UUID()
     let nameF: String
@@ -32,8 +58,43 @@ struct ContentView: View {
             List(users){ user in
                 Text("\(user.nameL), \(user.nameF)")
             }
+            Text("Hello World")
+                .onTapGesture {
+                    let str = "Test Message"
+                    let url = getDocuments().appendingPathComponent("message.txt")
+                    do {
+                        try str.write(to: url, atomically: true, encoding: .utf8)
+                        let input = try String(contentsOf: url)
+                        print(input)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+//                    FileManager.default.storeData(data: "Test Message")
+                }
+            Button("Write") {
+                let data = Data("Test Message".utf8)
+                let url = URL.documentsDirectory.appending(path: "message.txt")
+                do {
+                    // atomic means completely at once all data
+                    try data.write(to: url, options: [.atomic, .completeFileProtection])
+                    let input = try String(contentsOf: url)
+                    print(input)
+                } catch {
+                    print(error.localizedDescription)
+                }
+//                FileManager.default.storeData(data: "Test Message")
+            }
+//            Button("Read"){
+//                print(FileManager.default.readData())
+//            }
         }
         .padding()
+    }
+    
+    // Apple provides a permanant storage location called Documents for all devices to save data from applications
+    func getDocuments() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
     }
 }
 
