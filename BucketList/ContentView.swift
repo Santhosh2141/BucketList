@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MapKit
 
 extension FileManager{
     func storeData(data: String){
@@ -60,6 +61,12 @@ struct FailedView: View {
         Text("Failed.")
     }
 }
+
+struct Location: Identifiable{
+    let id = UUID()
+    let name: String
+    let coordinate: CLLocationCoordinate2D
+}
 struct ContentView: View {
     let values = [1,2,5,3,8,6].sorted()
     let users = [
@@ -74,65 +81,89 @@ struct ContentView: View {
         case loading, success, failed
     }
     @State private var loadingState = LoadingState.failed
+    
+    @State private var mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 12.971599, longitude: 77.5775), span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
+    
+    // for annotations, we need a data type to find the location, a list to store the locations and pass this into the map view
+    
+    let location = [
+        Location(name: "Brundavan Gardens", coordinate: CLLocationCoordinate2D(latitude: 12.887746, longitude: 77.553095)),
+        Location(name: "Forum Mall", coordinate: CLLocationCoordinate2D(latitude: 12.888289, longitude: 77.562505))
+    ]
     var body: some View {
-        VStack {
-            List(users){ user in
-                Text("\(user.nameL), \(user.nameF)")
-            }
-            Text("Hello World")
-                .onTapGesture {
-//                    let str = "Test Message"
-//                    let url = getDocuments().appendingPathComponent("message.txt")
-//                    do {
-//                        try str.write(to: url, atomically: true, encoding: .utf8)
-//                        let input = try String(contentsOf: url)
-//                        print(input)
-//                    } catch {
-//                        print(error.localizedDescription)
-//                    }
+        NavigationStack{
+            VStack {
+                List(users){ user in
+                    Text("\(user.nameL), \(user.nameF)")
+                }
+                Text("Hello World")
+                    .onTapGesture {
+    //                    let str = "Test Message"
+    //                    let url = getDocuments().appendingPathComponent("message.txt")
+    //                    do {
+    //                        try str.write(to: url, atomically: true, encoding: .utf8)
+    //                        let input = try String(contentsOf: url)
+    //                        print(input)
+    //                    } catch {
+    //                        print(error.localizedDescription)
+    //                    }
+                        FileManager.default.storeData(data: "Test Message")
+                    }
+                Button("Write") {
+    //                let data = Data("Test Message".utf8)
+    //                let url = URL.documentsDirectory.appending(path: "message.txt")
+    //                do {
+    //                    // atomic means completely at once all data
+    //                    try data.write(to: url, options: [.atomic, .completeFileProtection])
+    //                    let input = try String(contentsOf: url)
+    //                    print(input)
+    //                } catch {
+    //                    print(error.localizedDescription)
+    //                }
                     FileManager.default.storeData(data: "Test Message")
                 }
-            Button("Write") {
-//                let data = Data("Test Message".utf8)
-//                let url = URL.documentsDirectory.appending(path: "message.txt")
-//                do {
-//                    // atomic means completely at once all data
-//                    try data.write(to: url, options: [.atomic, .completeFileProtection])
-//                    let input = try String(contentsOf: url)
-//                    print(input)
-//                } catch {
-//                    print(error.localizedDescription)
+                Button("Read"){
+                    print(FileManager.default.readData())
+                }
+                
+                Map(coordinateRegion: $mapRegion, annotationItems: location){ location in
+    //                MapMarker(coordinate: location.coordinate)
+                    MapAnnotation(coordinate: location.coordinate){
+                        VStack{
+                            Text(location.name)
+                            Circle()
+                                .stroke(.red, lineWidth: 3)
+                                .frame(width: 33, height: 33)
+                        }
+                    }
+                }
+    //            if Bool.random(){
+    //                Rectangle()
+    //            } else {
+    //                Circle()
+    //            }
+                
+//                if loadingState == .loading{
+//                    LoadingView()
+//                } else if loadingState == .success {
+//                    SuccessView()
+//                } else if loadingState == .failed {
+//                    FailedView()
 //                }
-                FileManager.default.storeData(data: "Test Message")
+                
+//                switch loadingState {
+//                case .loading:
+//                    LoadingView()
+//                case .success:
+//                    SuccessView()
+//                case .failed:
+//                    FailedView()
+//                }
             }
-            Button("Read"){
-                print(FileManager.default.readData())
-            }
+            .padding()
+            NavigationLink("Go to FaceID View", destination: FaceIDView())
             
-            if Bool.random(){
-                Rectangle()
-            } else {
-                Circle()
-            }
-            
-            if loadingState == .loading{
-                LoadingView()
-            } else if loadingState == .success {
-                SuccessView()
-            } else if loadingState == .failed {
-                FailedView()
-            }
-            
-            switch loadingState {
-            case .loading:
-                LoadingView()
-            case .success:
-                SuccessView()
-            case .failed:
-                FailedView()
-            }
         }
-        .padding()
     }
     
     // Apple provides a permanant storage location called Documents for all devices to save data from applications
