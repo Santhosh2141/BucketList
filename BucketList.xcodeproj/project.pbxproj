@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F6FDC8B2EB26B4B00A1C1AB /* FaceIDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6FDC8A2EB26B4B00A1C1AB /* FaceIDView.swift */; };
 		7F9861DA2E7EF39B00506305 /* BucketListApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9861D92E7EF39B00506305 /* BucketListApp.swift */; };
 		7F9861DC2E7EF39B00506305 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9861DB2E7EF39B00506305 /* ContentView.swift */; };
 		7F9861DE2E7EF39D00506305 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F9861DD2E7EF39D00506305 /* Assets.xcassets */; };
@@ -14,6 +15,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7F6FDC8A2EB26B4B00A1C1AB /* FaceIDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceIDView.swift; sourceTree = "<group>"; };
+		7F6FDC8C2EB26C6800A1C1AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7F9861D62E7EF39B00506305 /* BucketList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BucketList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F9861D92E7EF39B00506305 /* BucketListApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketListApp.swift; sourceTree = "<group>"; };
 		7F9861DB2E7EF39B00506305 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -51,8 +54,10 @@
 		7F9861D82E7EF39B00506305 /* BucketList */ = {
 			isa = PBXGroup;
 			children = (
+				7F6FDC8C2EB26C6800A1C1AB /* Info.plist */,
 				7F9861D92E7EF39B00506305 /* BucketListApp.swift */,
 				7F9861DB2E7EF39B00506305 /* ContentView.swift */,
+				7F6FDC8A2EB26B4B00A1C1AB /* FaceIDView.swift */,
 				7F9861DD2E7EF39D00506305 /* Assets.xcassets */,
 				7F9861DF2E7EF39D00506305 /* Preview Content */,
 			);
@@ -138,6 +143,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F9861DC2E7EF39B00506305 /* ContentView.swift in Sources */,
+				7F6FDC8B2EB26B4B00A1C1AB /* FaceIDView.swift in Sources */,
 				7F9861DA2E7EF39B00506305 /* BucketListApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -270,6 +276,8 @@
 				DEVELOPMENT_TEAM = 9F33763HHL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BucketList/Info.plist;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "We need to unlock your data";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -299,6 +307,8 @@
 				DEVELOPMENT_TEAM = 9F33763HHL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BucketList/Info.plist;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "We need to unlock your data";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
