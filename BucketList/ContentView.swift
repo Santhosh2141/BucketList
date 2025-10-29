@@ -43,6 +43,23 @@ struct User: Identifiable, Comparable{
         lhs.nameL < rhs.nameL
     }
 }
+struct LoadingView: View {
+    var body: some View {
+        Text("Loading...")
+    }
+}
+
+struct SuccessView: View {
+    var body: some View {
+        Text("Success!")
+    }
+}
+
+struct FailedView: View {
+    var body: some View {
+        Text("Failed.")
+    }
+}
 struct ContentView: View {
     let values = [1,2,5,3,8,6].sorted()
     let users = [
@@ -53,6 +70,10 @@ struct ContentView: View {
     ].sorted()
     // using sorted for this wont work.
     // and for sorting we have to call sorted inside the view evertyime we use. but, in structs its inbuilt cuz Ints are comparable
+    enum LoadingState {
+        case loading, success, failed
+    }
+    @State private var loadingState = LoadingState.failed
     var body: some View {
         VStack {
             List(users){ user in
@@ -86,6 +107,29 @@ struct ContentView: View {
             }
             Button("Read"){
                 print(FileManager.default.readData())
+            }
+            
+            if Bool.random(){
+                Rectangle()
+            } else {
+                Circle()
+            }
+            
+            if loadingState == .loading{
+                LoadingView()
+            } else if loadingState == .success {
+                SuccessView()
+            } else if loadingState == .failed {
+                FailedView()
+            }
+            
+            switch loadingState {
+            case .loading:
+                LoadingView()
+            case .success:
+                SuccessView()
+            case .failed:
+                FailedView()
             }
         }
         .padding()
